@@ -1,0 +1,19 @@
+{
+  "mode": "given",
+  "from": "Q",
+  "to": "Zai K",
+  "items": [
+    {
+      "item": "hello",
+      "qty": "22",
+      "price": "$0.71",
+      "total": "$15.62"
+    }
+  ],
+  "grandTotal": "15.62",
+  "cash": false,
+  "trade": true,
+  "qbo": false,
+  "notes": "what the",
+  "timestamp": "2025-07-27T06:43:15.404Z"
+}

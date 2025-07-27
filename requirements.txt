@@ -1,0 +1,69 @@
+# Core
+requests
+httpx
+python-dotenv
+watchdog
+schedule
+colorama
+tqdm
+loguru
+
+# File handling
+pandas
+openpyxl
+python-docx
+python-pptx
+xlrd
+lxml
+beautifulsoup4
+markdown
+python-magic
+
+# OCR / Images / PDFs
+pillow
+pytesseract
+opencv-python
+pdf2image
+PyMuPDF
+reportlab
+img2pdf
+pypdf
+PyPDF2
+pdfplumber
+
+# Audio / Video
+pydub
+moviepy
+ffmpeg-python
+SpeechRecognition
+
+# AI / LLMs
+openai
+google-generativeai
+transformers
+sentence-transformers
+
+# Notion / Twilio / Google APIs
+notion-client
+twilio
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+
+# Web frameworks
+FastAPI
+
+# Compression
+py7zr
+rarfile
+
+# Encryption / Security
+
+# Testing / Dev tools
+pytest
+numpy
+tqdm
+pytesseract
+opencv-python
+

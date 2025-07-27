@@ -1,0 +1,134 @@
+Delivered-To: info@iisitax.com
+Received: by 2002:a05:7010:32cc:b0:439:c886:8b2a with SMTP id g12csp1699273mdc;
+        Mon, 17 Feb 2025 00:15:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEfv4LKN6yD8tYrez/8J59JaYOSVuSoLGEnDiR8SSNDhm+NewAHsxjJZTUXD8l3CD8LHgsC
+X-Received: by 2002:a05:6a00:198c:b0:730:4598:ddb5 with SMTP id d2e1a72fcca58-7326177622emr15455698b3a.2.1739780121936;
+        Mon, 17 Feb 2025 00:15:21 -0800 (PST)
+ARC-Seal: i=2; a=rsa-sha256; t=1739780121; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=NCPRijVAS8hcyOFaW5KzE/YEOzeR0uYuEqSev3Urt1bZ/7H/w1gaEnL71lcNUMOIFp
+         Y55Fcp3Q+WPQk1PE019grT7VzLZxETwAUslmRor7hoiryZlLNkVSMpC0Lr7zcB83RAOP
+         CZgiJ9okfYxNBvYl1c/dyMhC/bSSS7ptzHQp0HfuvzsZZeZf0CLtgJZ0Rp8Jx7Gv/9JA
+         LRG7T51fZeNZUvfK85KRzyvFJGPMn3URCpJ8QTLyBLCyjEZGjgPS/XNXB6jR7bQmGOnU
+         Scs6o/jPAHM/y3iZLvi4Xwt/ZDqVABNih751L1M/ZGLyk2tIqAsG5E4veJw4QHvuoQwe
+         3P0w==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=tm-mail-jid:original-envelope-id:xcrm-src:mime-version:subject
+         :message-id:to:from:date:dkim-signature;
+        bh=ZaLLQmWD/tD2NEgtoTPOPBvli0j0HMsoZL520W4Mpb0=;
+        fh=kLevyw92jj8npt6mTjrZF/Lu2ejO0av2CJDdalfaoOI=;
+        b=jpU09CnhEQi07UaRnGk/fy3PFy8znX4sYycLmdjQpv3s2UmHXjKOxkhhSF5CYhK1wa
+         JtU7OTx1yIxFqlOMGcxAcJCv6zhwalNz0XEVXoLnIrOw78LIuKS9dzwaaalFy0M0Soqj
+         msyX2+/mrhjx1uPC2Y7PnTvtnXVE324QfumUaLmqmLh6qNMQl1jInFjc8IMVuO/VQhXq
+         d4ZSXSVPoJeOQqlDSf2nHsxNEYaylKx5vBMsAqDtK/HVULlXbcjkXa9Juu5leLVH/dR+
+         zvHUmDATp0BXt/k1uPFLYE2D56BYdoc03bFxQwMH7z3M1eVC9vxGoH10kurnlMEmrXxc
+         BgDQ==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       dkim=pass header.i=@bigin.com header.s=1522905413783 header.b=igVXEHJj;
+       arc=pass (i=1 spf=pass spfdomain=mailer1.bigin.com dkim=pass dkdomain=bigin.com dmarc=pass fromdomain=bigin.com>);
+       spf=pass (google.com: domain of bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com designates 135.84.80.10 as permitted sender) smtp.mailfrom=bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=bigin.com
+Return-Path: <bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com>
+Received: from sendera10.transmail.net (sendera10.transmail.net. [135.84.80.10])
+        by mx.google.com with ESMTPS id d2e1a72fcca58-73286410727si642487b3a.240.2025.02.17.00.15.21
+        for <info@iisitax.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Feb 2025 00:15:21 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com designates 135.84.80.10 as permitted sender) client-ip=135.84.80.10;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@bigin.com header.s=1522905413783 header.b=igVXEHJj;
+       arc=pass (i=1 spf=pass spfdomain=mailer1.bigin.com dkim=pass dkdomain=bigin.com dmarc=pass fromdomain=bigin.com>);
+       spf=pass (google.com: domain of bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com designates 135.84.80.10 as permitted sender) smtp.mailfrom=bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=bigin.com
+ARC-Seal: i=1; a=rsa-sha256; t=1739780121; cv=none; 
+	d=us.zohomail360.com; s=zohoarc; 
+	b=bN1YB7lUKrwqUaaF9tLJwo/8bwU4v+NOxaHZmGM/NQbyn82bGqPgrq6A2rTCGWokXZqfB4uYDifmlMCluo1j8M2mInuLYpwUSFGiy6tmCIJBfipcvrKS6l9Avz3lz5tQHxXPE29dz2rQXclYeYLkkWsc3IFzspLs5Yti71vQYXY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=us.zohomail360.com; s=zohoarc; 
+	t=1739780121; h=Content-Type:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=ZaLLQmWD/tD2NEgtoTPOPBvli0j0HMsoZL520W4Mpb0=; 
+	b=aaszFNwAndJzsrRg8HFUDmKaw2vQUkFRCEs9DeKyj4ZS02dvkJ2nfkz6k7LPTNWeAIV57TZlKHGuaoMf1csBBIUvvgYNscsy9FRhSx5kXbjQ4bPkzIFO6nmiC/ecpzqRW4zpfIre9HuJHuvYx+5s//T5QukVURJGRmXfY9m8OZA=
+ARC-Authentication-Results: i=1; mx.us.zohomail360.com;
+	dkim=pass  header.i=bigin.com;
+	spf=pass  smtp.mailfrom=bounces+52aa2110-ed07-11ef-90d2-525400d4bb1c_vt1@mailer1.bigin.com;
+	dmarc=pass header.from=<notifications@bigin.com>
+Received: by mx.zohomail.com with SMTPS id 1739780119354371.17779266259515;
+	Mon, 17 Feb 2025 00:15:19 -0800 (PST)
+DKIM-Signature: a=rsa-sha256; b=igVXEHJjWqauBsxbS1MZYzLjQsej/DzClltO8uJ/LVs+UJwhuuuDYLZh5oiVsK9iN/+ilTYMWyWK+z2/YCuLvRqyMG0RTRAMJsDPcwDeS8DxgVoa7W8wwVCkcq5/rkY5bIjoK/xldFu5xmIYwUFoY5CSIyLi1ssZi36NBVr6br4=; c=relaxed/relaxed; s=1522905413783; d=bigin.com; v=1; bh=ZaLLQmWD/tD2NEgtoTPOPBvli0j0HMsoZL520W4Mpb0=; h=date:from:to:message-id:subject:mime-version:content-type:date:from:to:message-id:subject;
+Date: Mon, 17 Feb 2025 00:15:19 -0800 (PST)
+From: notifications@bigin.com
+To: info@iisitax.com
+Message-ID: <2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1@mailer1.bigin.com>
+Subject: =?UTF-8?Q?Actualizaci=C3=B3n_sobre_tu_Declaraci=C3=B3n?=
+ =?UTF-8?Q?_de_Impuestos_-_Enviada_Por_Correo?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_6629635_34468570.1739780119293"
+X-ZCORGID: 79fe51b8be88fbf02dd8f23682454e8b9a7855d39312a958d2e9f22431731332
+XCRM-Src: Automation
+X-ZCTEMPLATEID: MANzEwTjN4YMAwMDw3ADNzc2Mg==
+Original-Envelope-Id: 2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1
+X-JID: 2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1
+TM-MAIL-JID: 2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1
+X-App-Message-ID: 2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1
+X-Report-Abuse: <mailto:abuse+2d6f.289893b8.m1.52aa2110-ed07-11ef-90d2-525400d4bb1c.19512f9d5a1@zeptomail.com>
+X-ZohoMailClient: External
+
+------=_Part_6629635_34468570.1739780119293
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Actualizaci=C3=B3n sobre tu Declaraci=C3=B3n de Impuestos DECLARACI=C3=93N =
+ENVIADA POR CORREO Tu declaraci=C3=B3n de impuestos ha sido **enviada por c=
+orreo postal** al IRS y/o al estado correspondiente. El tiempo de procesami=
+ento puede variar.  Contactar Atentamente,
+El equipo de Easy Tax / IISITax
+
+------=_Part_6629635_34468570.1739780119293
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html;charset=
+=3DUTF-8"></head><body><div style=3D'word-wrap: break-word; word-break: bre=
+ak-word;font-family:Verdana,arial,Helvetica,sans-serif;font-size:13px'><div=
+><div>
+    <style>body { font-family: Arial, sans-serif; background: linear-gradie=
+nt(135deg, rgb(10, 50, 120), rgb(20, 80, 160)); color: rgb(51, 51, 51); tex=
+t-align: center; padding: 40px }.container { background: rgb(255, 255, 255)=
+; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-s=
+hadow: 5px 5px 15px rgba(0, 0, 0, 0.3) }h1 { font-size: 28px; margin-bottom=
+: 10px; color: rgb(16, 54, 111) }p { font-size: 16px; line-height: 1.5; col=
+or: rgb(34, 34, 34) }.status { font-size: 22px; font-weight: bold; text-tra=
+nsform: uppercase; padding: 10px; border-radius: 5px; display: inline-block=
+; background: rgba(103, 58, 183, 0.1); color: rgb(103, 58, 183); border: 2p=
+x solid rgb(103, 58, 183) }.amount { font-size: 18px; font-weight: bold }.r=
+efund { color: rgb(56, 142, 60) }.due { color: rgb(211, 47, 47) }.neutral {=
+ color: rgb(85, 85, 85) }.button { display: inline-block; background: rgb(3=
+0, 136, 229); color: rgb(255, 255, 255); padding: 12px 20px; margin: 20px 1=
+0px; text-decoration: none; font-size: 18px; border-radius: 5px; font-weigh=
+t: bold; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); transition: all 0.3s e=
+ase-in-out }.button:hover { background: rgb(20, 120, 210); box-shadow: 3px =
+3px 10px rgba(0, 0, 0, 0.4) }.footer { margin-top: 20px; font-size: 14px; c=
+olor: rgb(68, 68, 68) }.logo { width: 180px; margin-bottom: 20px }.divider =
+{ border-top: 1px solid rgb(221, 221, 221); margin: 20px 0 }</style>
+
+
+    <div class=3D"container">
+       =20
+        <h1>Actualizaci=C3=B3n sobre tu Declaraci=C3=B3n de Impuestos</h1>
+        <p><span class=3D"status">DECLARACI=C3=93N ENVIADA POR CORREO</span=
+></p>
+        <p>Tu declaraci=C3=B3n de impuestos ha sido **enviada por correo po=
+stal** al IRS y/o al estado correspondiente. El tiempo de procesamiento pue=
+de variar.</p>
+        <div class=3D"divider"></div>
+       =20
+        <a target=3D"_blank" class=3D"button" href=3D"https://salesiq.zohop=
+ublic.com/signaturesupport.ls?widgetcode=3Dsiq8967a5988a19baf37fc6338e03f60=
+8d4f7f82f3ce2b1803ec0016f4a0b949e72e6c797c2ab422e86bf995d57f762a5c9&amp;e=
+=3Dsiq8e3b1d0b2798b5f3d9c931f1cdffba0a964e21f7712d43bfe1235c9a194c2ecc" tit=
+le=3D"Contactar">Contactar</a>
+        <p class=3D"footer">Atentamente,<br /><strong>El equipo de Easy Tax=
+ / IISITax</strong></p>
+    </div></div></div></div></body></html>
+------=_Part_6629635_34468570.1739780119293--

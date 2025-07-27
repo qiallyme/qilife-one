@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QiLife Cockpit</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-mode">
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="qlife.png" alt="QiLife Logo">
+      <h2>QiLife</h2>
+    </div>
+    <nav>
+      <button onclick="navigateTo('dashboard')">Dashboard</button>
+      <button onclick="navigateTo('quick-receipt')">Quick Receipt</button>
+      <button onclick="navigateTo('file-flow')">File Flow</button>
+      <button onclick="navigateTo('settings')">Settings</button>
+      <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </nav>
+    <div id="activity-feed" class="activity-feed">
+      <div class="feed-header">
+        <span>Activity Feed</span>
+        <button onclick="toggleFeed()">Hide</button>
+      </div>
+      <ul id="activity-list"></ul>
+    </div>
+  </aside>
+
+  <main>
+    <!-- Dashboard Page -->
+    <section id="dashboard" class="page active">
+      <h1>Command Dashboard</h1>
+      <p>Home &gt; Dashboard</p>
+      <p>Welcome to QiLife Cockpit.</p>
+    </section>
+
+    <!-- Quick Receipt Page -->
+    <section id="quick-receipt" class="page">
+      <h1>Quick Receipt</h1>
+      <div id="receipt-entry">
+        <input id="item-name" placeholder="Item Name" />
+        <input id="item-qty" type="number" placeholder="Quantity" />
+        <input id="item-price" type="number" step="0.01" placeholder="Price" />
+        <textarea id="item-notes" placeholder="Notes (optional)"></textarea>
+        <button onclick="addItem()">Add Item</button>
+        <button onclick="printReceipt()">Print Receipt</button>
+      </div>
+      <div id="receipt-preview" class="receipt-preview"></div>
+    </section>
+
+    <!-- File Flow Page -->
+    <section id="file-flow" class="page">
+      <h1>File Flow</h1>
+      <p>Home &gt; File Flow</p>
+      <pre id="fileflow-output">Running File Flow...</pre>
+      <button onclick="runFileFlow()">Run File Flow</button>
+    </section>
+
+    <!-- Settings Page -->
+    <section id="settings" class="page">
+      <h1>Settings</h1>
+      <p>Home &gt; Settings</p>
+      <div class="settings-group">
+        <label>OpenAI API Key</label>
+        <div class="key-input">
+          <input id="openai-key" type="password" oninput="saveSettings()" />
+          <button onclick="toggleKeyVisibility('openai-key')">👁</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <label>Gemini API Key</label>
+        <div class="key-input">
+          <input id="gemini-key" type="password" oninput="saveSettings()" />
+          <button onclick="toggleKeyVisibility('gemini-key')">👁</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <label>Twilio API Key</label>
+        <div class="key-input">
+          <input id="twilio-key" type="password" oninput="saveSettings()" />
+          <button onclick="toggleKeyVisibility('twilio-key')">👁</button>
+        </div>
+      </div>
+      <p class="saved-indicator" id="saved-indicator">Saved!</p>
+    </section>
+  </main>
+</body>
+<script src="scripts.js"></script>
+</html>

@@ -1,0 +1,162 @@
+{
+  "version": "1.0.0",
+  "drives": {
+    "A": {
+      "name": "Inbox",
+      "subfolders": {
+        "A00chk": {
+          "keywords": [
+            "checklist",
+            "review",
+            "unmatched"
+          ],
+          "year_required": false
+        },
+        "A01tmp": {
+          "keywords": [
+            "temp",
+            "temporary",
+            "scratch"
+          ],
+          "year_required": false
+        },
+        "A02ref": {
+          "keywords": [
+            "reference",
+            "holding",
+            "pending"
+          ],
+          "year_required": false
+        }
+      }
+    },
+    "R": {
+      "name": "Resources",
+      "subfolders": {
+        "R00for": {
+          "keywords": [
+            "form",
+            "template",
+            "sample",
+            "guide"
+          ],
+          "year_required": false
+        },
+        "R01scr": {
+          "keywords": [
+            "script",
+            "automation",
+            "macro"
+          ],
+          "year_required": false
+        },
+        "R02doc": {
+          "keywords": [
+            "document",
+            "guide",
+            "manual"
+          ],
+          "year_required": false
+        },
+        "R03med": {
+          "keywords": [
+            "media",
+            "stock",
+            "image",
+            "audio",
+            "video"
+          ],
+          "year_required": false
+        },
+        "R04dev": {
+          "keywords": [
+            "dev",
+            "code",
+            "snippet",
+            "tool"
+          ],
+          "year_required": false
+        }
+      }
+    },
+    "F": {
+      "name": "Finance",
+      "subfolders": {
+        "F00acc": {
+          "keywords": [
+            "account",
+            "bank",
+            "card",
+            "statement"
+          ],
+          "year_required": true
+        },
+        "F01bud": {
+          "keywords": [
+            "budget",
+            "plan",
+            "spending"
+          ],
+          "year_required": true
+        },
+        "F10tax": {
+          "keywords": [
+            "tax",
+            "irs",
+            "1040",
+            "1099",
+            "w2",
+            "turbotax"
+          ],
+          "year_required": true,
+          "reserved_tags": [
+            "INV",
+            "W2S",
+            "1099"
+          ]
+        }
+      }
+    },
+    "P": {
+      "name": "Private",
+      "subfolders": {
+        "P00idn": {
+          "keywords": [
+            "identity",
+            "id",
+            "birth",
+            "license",
+            "ssn"
+          ],
+          "year_required": false
+        },
+        "P03mem": {
+          "keywords": [
+            "memories",
+            "photos",
+            "videos",
+            "recordings"
+          ],
+          "year_required": false
+        },
+        "P05prj": {
+          "keywords": [
+            "project",
+            "personal",
+            "ideas",
+            "notes"
+          ],
+          "year_required": false
+        }
+      }
+    }
+  },
+  "tags": {
+    "PEN": "Pending action or update",
+    "MIS": "Unsorted or unknown category",
+    "0000": "Missing or unknown year",
+    "TMP": "Temporary file",
+    "DUP": "Detected duplicate",
+    "ERR": "Damaged or corrupted file"
+  }
+}

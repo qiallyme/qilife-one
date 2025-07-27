@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Receipt</title>
+<style>
+  body {
+    font-family: monospace, sans-serif;
+    width: 280px;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 14px;
+  }
+  .header { text-align: center; border-bottom: 1px dashed #000; margin-bottom: 5px; }
+  .header h2 { margin: 0; font-size: 18px; }
+  .header small { display: block; font-size: 11px; margin-top: 2px; }
+
+  .mode-toggle, .recipient {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 12px;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 5px; }
+  th, td { padding: 2px; text-align: left; }
+  th { border-bottom: 1px dashed #000; font-size: 12px; }
+  .right { text-align: right; }
+  .total-line { border-top: 1px dashed #000; font-weight: bold; padding-top: 3px; margin-top: 5px; }
+
+  .notes { margin-top: 5px; border-top: 1px dashed #000; padding-top: 5px; font-size: 12px; }
+
+  .checkbox-section {
+    margin-top: 10px;
+    border-top: 1px dashed #000;
+    padding-top: 5px;
+    font-size: 12px;
+  }
+  .checkbox { display: flex; align-items: center; margin: 2px 0; cursor: pointer; }
+  .checkbox input { margin-right: 5px; transform: scale(1.2); }
+
+  .signature { text-align: center; margin-top: 20px; }
+  .signature-line { border-top: 1px solid #000; width: 80%; margin: 30px auto 5px; }
+
+  .footer { text-align: center; font-size: 10px; margin-top: 10px; border-top: 1px dashed #000; padding-top: 5px; }
+
+  @media print { .input-section, button, .mode-toggle, .recipient { display: none; } }
+  /* Always white for receipt printing/viewing */
+#receipt-container {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+@media print {
+  body, #receipt-container {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h2>Receipt / Proof of Transfer</h2>
+  <small>Date: <span id="date"></span> | Time: <span id="time"></span></small>
+</div>
+
+<!-- MODE TOGGLE -->
+<div class="mode-toggle">
+  <label>
+    <input type="radio" name="mode" value="given" checked onchange="updateMode()"> From Q →
+  </label>
+  <label>
+    <input type="radio" name="mode" value="received" onchange="updateMode()"> To Q ←
+  </label>
+</div>
+
+<!-- RECIPIENT -->
+<div class="recipient">
+  <label for="recipient-name">Recipient Name:</label>
+  <input type="text" id="recipient-name" value="Zai K" oninput="updateRecipient()">
+</div>
+
+<!-- ITEMS -->
+<table id="receipt-table">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th class="right">Qty</th>
+      <th class="right">Price</th>
+      <th class="right">Total</th>
+    </tr>
+  </thead>
+  <tbody id="receipt-body"></tbody>
+</table>
+
+<p class="total-line">Grand Total: $<span id="grand-total">0.00</span></p>
+
+<!-- NOTES -->
+<div class="notes">
+  <label for="notes">Notes / Description:</label>
+  <textarea id="notes" rows="3" style="width:100%; font-family:monospace; font-size:12px;"></textarea>
+</div>
+
+<!-- CHECKBOXES -->
+<div class="checkbox-section">
+  <div class="checkbox">
+    <input type="checkbox" id="cash-checkbox">
+    <label for="cash-checkbox">Paid in Cash</label>
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="trade-checkbox">
+    <label for="trade-checkbox">Paid via Trade / Alternative Method</label>
+  </div>
+  <div class="checkbox">
+    <input type="checkbox" id="qbo-checkbox">
+    <label for="qbo-checkbox">Entered in QuickBooks</label>
+  </div>
+</div>
+
+<!-- ITEM INPUT -->
+<div id="entry-section">
+  <input id="item-name" placeholder="Item Name">
+  <input id="item-qty" type="number" placeholder="Qty">
+  <input id="item-price" type="number" step="0.01" placeholder="Price">
+  <button onclick="addItem()">Add Item</button>
+  <button onclick="printReceipt()">Print</button>
+</div>
+
+<div id="receipt-preview"></div>
+
+
+<!-- PRINT BUTTON -->
+<button onclick="saveAndPrint()">Save & Print (2 Copies)</button>
+
+<!-- SIGNATURE -->
+<div class="signature">
+  <div class="signature-line"></div>
+  <p>Signature (<span id="sig-name">Q</span>)</p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>© <span id="year"></span> Q — Record of Exchange</p>
+  <p>Keep this as proof of transaction or document transfer.</p>
+</div>
+
+<script>
+let total = 0;
+let mode = 'given';
+let recipient = 'Zai K';
+
+function addItem() {
+  const name = document.getElementById('item-name').value.trim();
+  const qty = parseFloat(document.getElementById('qty').value);
+  const price = parseFloat(document.getElementById('price').value);
+
+  if (!name || isNaN(qty) || isNaN(price)) {
+    alert("Please enter all fields.");
+    return;
+  }
+
+  const lineTotal = qty * price;
+  total += lineTotal;
+
+  const tbody = document.getElementById('receipt-body');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${name}</td>
+    <td class="right">${qty}</td>
+    <td class="right">$${price.toFixed(2)}</td>
+    <td class="right">$${lineTotal.toFixed(2)}</td>`;
+  tbody.appendChild(row);
+
+  document.getElementById('grand-total').textContent = total.toFixed(2);
+
+  document.getElementById('item-name').value = '';
+  document.getElementById('qty').value = '';
+  document.getElementById('price').value = '';
+}
+
+function updateMode() {
+  const radios = document.getElementsByName('mode');
+  for (let radio of radios) {
+    if (radio.checked) {
+      mode = radio.value;
+      document.getElementById('sig-name').textContent = (mode === 'given') ? 'Q' : recipient;
+    }
+  }
+}
+
+function updateRecipient() {
+  recipient = document.getElementById('recipient-name').value;
+  if (mode === 'received') {
+    document.getElementById('sig-name').textContent = recipient;
+  }
+}
+
+function setDateTime() {
+  const now = new Date();
+  document.getElementById('date').textContent = now.toLocaleDateString();
+  document.getElementById('time').textContent = now.toLocaleTimeString();
+  document.getElementById('year').textContent = now.getFullYear();
+}
+setDateTime();
+
+function saveAndPrint() {
+  const data = {
+    mode: mode,
+    from: mode === 'given' ? 'Q' : recipient,
+    to: mode === 'given' ? recipient : 'Q',
+    items: Array.from(document.querySelectorAll('#receipt-body tr')).map(row => {
+      const cells = row.querySelectorAll('td');
+      return {
+        item: cells[0].textContent,
+        qty: cells[1].textContent,
+        price: cells[2].textContent,
+        total: cells[3].textContent
+      };
+    }),
+    grandTotal: document.getElementById('grand-total').textContent,
+    cash: document.getElementById('cash-checkbox').checked,
+    trade: document.getElementById('trade-checkbox').checked,
+    qbo: document.getElementById('qbo-checkbox').checked,
+    notes: document.getElementById('notes').value,
+    timestamp: new Date().toISOString()
+  };
+
+  // Send data to Electron main process to save logs
+  if (window.electronAPI && window.electronAPI.saveReceipt) {
+    window.electronAPI.saveReceipt(data);
+  } else {
+    console.error("Electron API not available. Check preload.js setup.");
+  }
+
+  // Print 2 copies without preview
+  window.print();
+  setTimeout(() => window.print(), 1000);
+}
+</script>
+
+</body>
+</html>

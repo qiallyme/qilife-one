@@ -1,0 +1,24 @@
+{
+  "name": "qilife-one",
+  "version": "1.0.0",
+  "description": "QiLife Command Dashboard (Electron Cockpit)",
+  "main": "src/qi_one/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron src/qi_one",
+    "package-win": "electron-packager . qilife-one --platform=win32 --arch=x64 --out=dist --overwrite --prune=true --ignore=\"(node_modules|.git|.env)\""
+  },
+  "files": [
+    "src/**/*",
+    "requirements.txt",
+    ".venv/**/*",
+    "package.json",
+    "qlife.png"
+  ],
+  "author": "Cody Rice Velasquez",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-packager": "^17.1.0"
+  }
+}

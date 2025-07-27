@@ -1,0 +1,117 @@
+/* Base styling */
+body {
+  margin: 0;
+  font-family: 'Nunito', Verdana, sans-serif;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(to bottom, #007bff, #6a00ff);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.sidebar nav button {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.3rem 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar nav button:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.activity-feed {
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.activity-feed .feed-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem;
+  font-weight: bold;
+}
+
+.activity-feed ul {
+  list-style: none;
+  padding-left: 10px;
+  font-size: 0.8rem;
+}
+
+/* Main content */
+main {
+  flex: 1;
+  padding: 1.5rem;
+  background: var(--background, #f8f9fa);
+  color: var(--text-color, #000);
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* Receipt preview */
+.receipt-preview {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background: white;
+  color: black;
+}
+
+/* Dark mode */
+body.dark-mode {
+  --background: #181818;
+  --text-color: #fff;
+}
+
+/* Print style: only show receipt preview */
+@media print {
+  body * { visibility: hidden; }
+  #receipt-preview, #receipt-preview * {
+    visibility: visible;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    color: black;
+  }
+}
+
+/* Saved indicator */
+.saved-indicator {
+  opacity: 0;
+  color: green;
+  transition: opacity 0.3s ease;
+}
+.saved-indicator.show {
+  opacity: 1;
+}
