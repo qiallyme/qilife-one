@@ -44,7 +44,11 @@
 
   .footer { text-align: center; font-size: 10px; margin-top: 10px; border-top: 1px dashed #000; padding-top: 5px; }
 
-  @media print { .input-section, button, .mode-toggle, .recipient { display: none; } }
+  @media print { 
+    #entry-section, button, .mode-toggle, .recipient, .notes textarea { display: none; }
+    .notes { border-top: 1px dashed #000; padding-top: 5px; }
+    .notes:after { content: attr(data-notes); }
+  }
   /* Always white for receipt printing/viewing */
 #receipt-container {
   background: #fff !important;
@@ -155,8 +159,8 @@ let recipient = 'Zai K';
 
 function addItem() {
   const name = document.getElementById('item-name').value.trim();
-  const qty = parseFloat(document.getElementById('qty').value);
-  const price = parseFloat(document.getElementById('price').value);
+  const qty = parseFloat(document.getElementById('item-qty').value);
+  const price = parseFloat(document.getElementById('item-price').value);
 
   if (!name || isNaN(qty) || isNaN(price)) {
     alert("Please enter all fields.");
@@ -178,8 +182,8 @@ function addItem() {
   document.getElementById('grand-total').textContent = total.toFixed(2);
 
   document.getElementById('item-name').value = '';
-  document.getElementById('qty').value = '';
-  document.getElementById('price').value = '';
+  document.getElementById('item-qty').value = '';
+  document.getElementById('item-price').value = '';
 }
 
 function updateMode() {
@@ -208,6 +212,11 @@ function setDateTime() {
 setDateTime();
 
 function saveAndPrint() {
+  // Update notes display for printing
+  const notesElement = document.querySelector('.notes');
+  const notesText = document.getElementById('notes').value;
+  notesElement.setAttribute('data-notes', notesText);
+  
   const data = {
     mode: mode,
     from: mode === 'given' ? 'Q' : recipient,
@@ -225,7 +234,7 @@ function saveAndPrint() {
     cash: document.getElementById('cash-checkbox').checked,
     trade: document.getElementById('trade-checkbox').checked,
     qbo: document.getElementById('qbo-checkbox').checked,
-    notes: document.getElementById('notes').value,
+    notes: notesText,
     timestamp: new Date().toISOString()
   };
 
