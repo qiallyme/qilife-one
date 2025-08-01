@@ -1,24 +1,23 @@
 {
   "name": "qilife-one",
-  "version": "1.0.0",
-  "description": "QiLife Command Dashboard (Electron Cockpit)",
-  "main": "src/qi_one/main.js",
+  "version": "0.1.0",
+  "main": "electron/main.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron src/qi_one",
-    "package-win": "electron-packager . qilife-one --platform=win32 --arch=x64 --out=dist --overwrite --prune=true --ignore=\"(node_modules|.git|.env)\""
+    "dev": "concurrently \"npm:dev:renderer\" \"npm:dev:electron\"",
+    "dev:renderer": "vite --config vite.config.js",
+    "dev:electron": "wait-on tcp:5173 && electron .",
+    "build": "vite build",
+    "start": "electron ."
   },
-  "files": [
-    "src/**/*",
-    "requirements.txt",
-    ".venv/**/*",
-    "package.json",
-    "qlife.png"
-  ],
-  "author": "Cody Rice Velasquez",
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
     "electron": "^30.0.0",
-    "electron-packager": "^17.1.0"
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^8.0.0",
+    "wait-on": "^7.0.1"
   }
 }
