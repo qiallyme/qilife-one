@@ -1,0 +1,22 @@
+directories:
+  output: dist-electron
+  buildResources: build
+appId: com.qilife.app
+productName: QiLife One
+files:
+  - filter:
+      - electron-app/main/**/*
+      - dist/**/*
+      - node_modules/**/*
+extraResources:
+  - from: python-backend
+    to: python-backend
+win:
+  target: portable
+mac:
+  target: dmg
+linux:
+  target: AppImage
+portable:
+  artifactName: QiLife-One.exe
+electronVersion: 30.5.1

@@ -2,6 +2,10 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
 
+// Python backend configuration
+const PYTHON_API_URL = 'http://127.0.0.1:8000';
+const PYTHON_BACKEND_PATH = path.join(__dirname, '..', '..', 'python-backend');
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
@@ -11,18 +15,16 @@ function createWindow() {
     },
   });
   
-  // Try to load from the correct path - first check if dist exists in renderer
-  const rendererPath = path.join(__dirname, '..', 'renderer', 'dist', 'index.html');
-  const rootPath = path.join(__dirname, '..', '..', 'dist', 'index.html');
+  // Load the built React app from the dist directory
+  const distPath = path.join(__dirname, '..', '..', 'dist', 'index.html');
   
-  // Check which path exists and load accordingly
-  if (require('fs').existsSync(rendererPath)) {
-    win.loadFile(rendererPath);
-  } else if (require('fs').existsSync(rootPath)) {
-    win.loadFile(rootPath);
+  if (require('fs').existsSync(distPath)) {
+    console.log('📦 Loading built app from:', distPath);
+    win.loadFile(distPath);
   } else {
-    // If neither exists, load the root index.html directly
-    win.loadFile(path.join(__dirname, '..', '..', 'index.html'));
+    console.log('⚠️ Built app not found, loading development version');
+    // Fallback to development server
+    win.loadURL('http://localhost:5173');
   }
 }
 
@@ -31,31 +33,76 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-// IPC handler that invokes the duplicate cleaner script
-ipcMain.handle('run-duplicate-cleaner', async (_event, options) => {
-  const scriptPath = path.join(
-    __dirname,
-    '..',
-    'modules',
-    'fileflow',
-    'duplicate_cleaner',
-    'duplicateCleaner.js',
-  );
-  return new Promise((resolve, reject) => {
-    const args = [];
-    if (options.roots) args.push('--roots', options.roots.join(','));
-    if (options.maxDepth !== undefined) args.push('--max-depth', String(options.maxDepth));
-    if (options.weights) args.push('--weights', `${options.weights.name},${options.weights.size}`);
-    if (options.reviewThreshold) args.push('--review-threshold', String(options.reviewThreshold));
-    if (options.preferThreshold) args.push('--prefer-threshold', String(options.preferThreshold));
-    if (options.aiThreshold) args.push('--ai-threshold', String(options.aiThreshold));
-    if (options.action) args.push('--action', options.action);
-    if (options.output) args.push('--output', options.output);
-    const child = spawn('node', [scriptPath, ...args]);
-    let output = '';
-    child.stdout.on('data', (data) => (output += data.toString()));
-    child.stderr.on('data', (data) => (output += data.toString()));
-    child.on('close', () => resolve(output));
-    child.on('error', (err) => reject(err));
+// Start Python backend server
+function startPythonBackend() {
+  console.log('🐍 Starting Python backend server...');
+  
+  const pythonProcess = spawn('python', ['-m', 'uvicorn', 'main:app', '--host', '127.0.0.1', '--port', '8000'], {
+    cwd: PYTHON_BACKEND_PATH,
+    stdio: 'pipe'
   });
+  
+  pythonProcess.stdout.on('data', (data) => {
+    console.log('🐍 Python backend:', data.toString());
+  });
+  
+  pythonProcess.stderr.on('data', (data) => {
+    console.error('🐍 Python backend error:', data.toString());
+  });
+  
+  pythonProcess.on('close', (code) => {
+    console.log(`🐍 Python backend exited with code ${code}`);
+  });
+  
+  return pythonProcess;
+}
+
+// IPC handler for API calls to Python backend
+ipcMain.handle('call-python-api', async (_event, endpoint, data) => {
+  try {
+    const response = await fetch(`${PYTHON_API_URL}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('API call error:', error);
+    throw error;
+  }
+});
+
+// IPC handler for duplicate cleaner (now via API)
+ipcMain.handle('run-duplicate-cleaner', async (_event, options) => {
+  try {
+    const response = await fetch(`${PYTHON_API_URL}/fileflow/duplicate-cleaner`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(options),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Duplicate cleaner API error:', error);
+    throw error;
+  }
+});
+
+// Start Python backend when app starts
+app.whenReady().then(() => {
+  createWindow();
+  startPythonBackend();
 });

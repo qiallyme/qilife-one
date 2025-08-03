@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  runDuplicateCleaner: (options) =>
-    ipcRenderer.invoke('run-duplicate-cleaner', options),
+  callPythonAPI: (endpoint, data) => ipcRenderer.invoke('call-python-api', endpoint, data),
+  runDuplicateCleaner: (options) => ipcRenderer.invoke('run-duplicate-cleaner', options),
 });

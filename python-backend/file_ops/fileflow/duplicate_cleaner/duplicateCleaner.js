@@ -197,7 +197,7 @@ async function writeReports(classifications, outputDir) {
   for (const item of classifications) {
     csvLines.push([
       item.fileA.path,
-      item.fileB.path,"https://www.youtube.com/watch?v=SkBb-b18UNQ"
+      item.fileB.path,"https://www.youtube.com/watch?v=SkBb-b18UNQ",
       item.nameSim.toFixed(3),
       item.sizeSim.toFixed(3),
       item.compSim.toFixed(3),

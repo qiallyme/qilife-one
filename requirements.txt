@@ -1,69 +1,60 @@
-# Core
-requests
-httpx
-python-dotenv
-watchdog
-schedule
-colorama
-tqdm
-loguru
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
 
-# File handling
-pandas
-openpyxl
-python-docx
-python-pptx
-xlrd
-lxml
-beautifulsoup4
-markdown
-python-magic
+# File processing
+python-magic==0.4.27
+Pillow==10.1.0
+python-docx==1.1.0
+PyPDF2==3.0.1
+openpyxl==3.1.2
 
-# OCR / Images / PDFs
-pillow
-pytesseract
-opencv-python
-pdf2image
-PyMuPDF
-reportlab
-img2pdf
-pypdf
-PyPDF2
-pdfplumber
+# AI and ML
+openai==1.3.7
+anthropic==0.7.7
+google-generativeai==0.3.2
+transformers==4.35.2
+torch==2.1.1
+sentence-transformers==2.2.2
 
-# Audio / Video
-pydub
-moviepy
-ffmpeg-python
-SpeechRecognition
+# Data processing
+pandas==2.1.3
+numpy==1.25.2
+scikit-learn==1.3.2
 
-# AI / LLMs
-openai
-google-generativeai
-transformers
-sentence-transformers
+# Web scraping and automation
+selenium==4.15.2
+requests==2.31.0
+beautifulsoup4==4.12.2
 
-# Notion / Twilio / Google APIs
-notion-client
-twilio
-google-api-python-client
-google-auth
-google-auth-oauthlib
-google-auth-httplib2
+# Database and storage
+sqlite3
+sqlalchemy==2.0.23
+alembic==1.12.1
 
-# Web frameworks
-FastAPI
+# Audio processing
+pydub==0.25.1
+SpeechRecognition==3.10.0
+elevenlabs==0.2.26
 
-# Compression
-py7zr
-rarfile
+# Image processing
+opencv-python==4.8.1.78
+matplotlib==3.8.2
 
-# Encryption / Security
+# Utilities
+python-dotenv==1.0.0
+click==8.1.7
+tqdm==4.66.1
+colorama==0.4.6
 
-# Testing / Dev tools
-pytest
-numpy
-tqdm
-pytesseract
-opencv-python
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
+
+# Additional dependencies
+aiofiles==23.2.1
+python-multipart==0.0.6
 

@@ -1,7 +1,7 @@
 {
   "name": "qilife-one",
   "version": "0.1.0",
-  "main": "app/main/main.js",
+  "main": "electron-app/main/main.js",
   "scripts": {
     "dev": "concurrently \"npm:dev:renderer\" \"npm:dev:electron\"",
     "dev:renderer": "vite --config vite.config.js",
@@ -12,7 +12,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "package": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder"
+    "dist": "npm run build && electron-builder",
+    "package:all": "npm run package:python && npm run package:electron && npm run create:installer",
+    "package:python": "node scripts/package-python.js",
+    "package:electron": "npm run build && node scripts/package-electron-manual.js",
+    "create:installer": "node scripts/create-installer.js"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,27 +29,8 @@
     "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.0.0",
     "wait-on": "^7.0.1",
-    "jest": "^29.0.0"
-  },
-  "build": {
-    "appId": "com.qilife.app",
-    "productName": "QiLife One",
-    "directories": {
-      "output": "dist-electron"
-    },
-    "files": [
-      "app/main/**/*",
-      "dist/**/*",
-      "node_modules/**/*"
-    ],
-    "win": {
-      "target": "nsis"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "linux": {
-      "target": "AppImage"
-    }
+    "jest": "^29.0.0",
+    "archiver": "^6.0.1",
+    "fs-extra": "^11.2.0"
   }
 }
