@@ -1,0 +1,6 @@
+{
+  "voice": "default",
+  "language": "en-US",
+  "wake_word": "Qinnie",
+  "use_elevenlabs": false
+}

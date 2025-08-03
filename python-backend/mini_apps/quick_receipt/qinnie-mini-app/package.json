@@ -1,0 +1,15 @@
+{
+    "name": "qinnie-mini",
+    "version": "1.0.0",
+    "description": "Qinnie Voice Assistant UI",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron ."
+    },
+    "author": "Q",
+    "license": "MIT",
+    "devDependencies": {
+      "electron": "^27.1.0"
+    }
+  }
+  
